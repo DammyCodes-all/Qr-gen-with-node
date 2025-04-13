@@ -19,7 +19,7 @@ function createQr(url){
     try{
         if(!url) throw new Error('No url given')
         var qr_svg = qr.image(url);
-        qr_svg.pipe(fs.createWriteStream('qr-code.png'))
+        qr_svg.pipe(fs.createWriteStream('./public/qr-code.png'))
     }
     catch(err){
         console.log("Error generating QR code: ", err)
@@ -27,13 +27,14 @@ function createQr(url){
 }
 
 app.get("/" , (req, res)=>{
-     res.sendFile(__dirname + '/public/index.html')
+     res.render('index.ejs' , {qrCode: null})
 })
 app.post('/submit' , (req , res)=>{
-    console.log(req.body)
     const url = req.body.link
     createQr(url)
-    res.sendFile(__dirname + '/qr-code.png')
+    const qrCode = `./qr-code.png`
+    console.log(qrCode)
+    res.render('index.ejs', {qrCode: qrCode})
 })
 app.listen(port , ()=>{
     console.log(`Server is running on port ${port}`)
