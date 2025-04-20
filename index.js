@@ -29,6 +29,14 @@ function createQr(url){
 app.get("/" , (req, res)=>{
      res.render('index.ejs' , {qrCode: null})
 })
+app.get('/download' , (req , res) =>{
+    const imgPath = `${__dirname}/public/qr-code.png`
+    res.download(imgPath , 'qr-code.png' , (err) =>{
+        if(err){
+            console.log(`Error trying to download: ${err.message}`)
+        }
+    })
+})
 app.post('/submit' , (req , res)=>{
     const url = req.body.link
     createQr(url)

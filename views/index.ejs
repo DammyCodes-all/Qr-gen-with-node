@@ -17,6 +17,9 @@
     </form>
     <% if (qrCode) { %>
         <img src="<%= qrCode %>" alt="Qr code will appear here">
+        <form action="/download" method="get">
+            <button>Download Qr-code</button>
+        </form>
     <% } %>
 </body>
 </html>
